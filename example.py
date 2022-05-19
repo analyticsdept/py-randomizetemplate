@@ -45,7 +45,8 @@ TRIGGER = "__modify"
 
 _random = RandomizeTemplate().randomize_template(
     template=TEMPLATE,
-    random_map=RANDOM_MAP
+    random_map=RANDOM_MAP,
+    trigger=TRIGGER
 )
 
 print(json.dumps(_random, indent=4), '\n\n')
@@ -55,7 +56,8 @@ print(json.dumps(_random, indent=4), '\n\n')
 _random_copies = RandomizeTemplate().copy_and_randomize_template(
     copies=10,
     template=TEMPLATE,
-    random_map=RANDOM_MAP
+    random_map=RANDOM_MAP,
+    trigger=TRIGGER
 )
 
 print(f'{len(_random_copies)} copies\n\n')

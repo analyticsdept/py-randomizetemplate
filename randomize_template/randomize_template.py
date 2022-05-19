@@ -13,10 +13,12 @@ class RandomizeTemplate():
 
     """
 
+    DEFAULT_TRIGGER = '__modify'
+
     def __init__(self) -> None:
         pass
 
-    def copy_and_randomize_template(self, copies=1, template={}, random_map={}):
+    def copy_and_randomize_template(self, copies=1, template={}, random_map={}, trigger=DEFAULT_TRIGGER):
         """
         Create multiple copies of the template, randomizing fields in each copy based on the map
 
@@ -27,16 +29,18 @@ class RandomizeTemplate():
         `random_map`: the random map
         """
 
-        _copies = [self.randomize_template(template, random_map, x) for x in range(0, copies)]
+        _copies = [self.randomize_template(template, random_map, trigger) for x in range(0, copies)]
         return _copies
 
-    def randomize_template(self, template, random_map, seed=0):
+    def randomize_template(self, template, random_map, trigger=DEFAULT_TRIGGER):
         """
         Create a copy of the template, randomizing fields based on the map
 
         `template`: the template dictionary
 
         `random_map`: the random map
+
+        `trigger`: the modification trigger key
         """
 
         def random_field(field_type, _options={}):
@@ -67,5 +71,5 @@ class RandomizeTemplate():
         _template = json.loads(json.dumps(template))
 
         _applyrecursive = ApplyRecursive(make_random, None, {'data': _template}, 'data')
-        result = _applyrecursive.apply(random_map, "__modify", _template)
+        result = _applyrecursive.apply(random_map, trigger, _template)
         return result
